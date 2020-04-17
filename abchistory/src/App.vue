@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/contents">Contents</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
@@ -41,5 +45,18 @@ li {
 
 a {
   color: #42b983;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    background: #222;
+}
+nav a {
+    display: block;
+    padding: 0.5em;
+    color: #eee;
+    line-height: 1em;
+    text-decoration: none;
 }
 </style>
