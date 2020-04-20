@@ -102,31 +102,6 @@ export default {
   clear: both;
 }
 
-
-/* .oneproblem:before,.oneproblem:after
-{
-    content: '';
-    position: absolute;
-    width:10px;
-    height: 10px;
-    border: solid 2px #ffcb8a;
-    border-radius: 50%;
-} */
-/* .oneproblem:after {
-    top:-12px;
-    left:-12px;
-}
-.oneproblem:before {
-    bottom:-12px;
-    right:-12px;
-} */
-/* 
-.oneproblem {
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  border: double 5px #4ec4d3;
-} */
-
 .query {
   margin-top: 1cm;
 }
