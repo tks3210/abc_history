@@ -99,6 +99,7 @@ export default {
       this.problem.solution = "";
     },
     addproblem: function() {
+      alert("開発中のため、外部データベースへの反映は行われません。")
       var pm = Vue.util.extend({}, this.problem);
       this.problems.push(pm);
       var db = firebase
@@ -109,6 +110,7 @@ export default {
       this.init();
     },
     addcategory: function() {
+      alert("開発中のため、外部データベースへの反映は行われません。")
       this.categoryDict.push(this.categoryNew);
       var db = firebase
         .firestore()

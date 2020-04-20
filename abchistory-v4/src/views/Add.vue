@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <Login v-if="!isLogin"></Login>
-    <Addpm v-if="isLogin"></Addpm>
+    <!-- <Login v-if="!isLogin"></Login>
+    <Addpm v-if="isLogin"></Addpm> -->
+    <Addpm></Addpm>
   </div>
 </template>
 
