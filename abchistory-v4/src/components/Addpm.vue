@@ -3,7 +3,7 @@
     <h3 class="presentense">問題を追加してください</h3>
     <div class="url">
       <div class="subtitle">URL</div>
-      <input type="text" v-model="problem.url" placeholder="問題のURL"/>
+      <input type="text" v-model="problem.url" placeholder="問題のURL" />
     </div>
     <div class="level">
       <div class="subtitle">難易度</div>
@@ -24,10 +24,8 @@
           <option disabled="disabled">問題の類型を選択してください</option>
           <option v-for="cat in categoryDict" v-bind:key="cat">{{cat}}</option>
         </select>
-        <div class = "showcategory">
-          <div v-for="cat in problem.categories" v-bind:key="cat">
-            {{cat}}
-          </div>
+        <div class="showcategory">
+          <div v-for="cat in problem.categories" v-bind:key="cat">{{cat}}</div>
         </div>
       </div>
       <div class="newcategory">
@@ -103,14 +101,20 @@ export default {
     addproblem: function() {
       var pm = Vue.util.extend({}, this.problem);
       this.problems.push(pm);
-      var db = firebase.firestore().collection("data").doc("contents");
-      db.update({ problems: this.problems});
+      var db = firebase
+        .firestore()
+        .collection("data")
+        .doc("contents");
+      db.update({ problems: this.problems });
       this.init();
     },
     addcategory: function() {
       this.categoryDict.push(this.categoryNew);
-      var db = firebase.firestore().collection("data").doc("contents");
-      db.update({categoryDict: this.categoryDict});
+      var db = firebase
+        .firestore()
+        .collection("data")
+        .doc("contents");
+      db.update({ categoryDict: this.categoryDict });
       this.categoryNew = "";
     },
     logout: function() {
@@ -129,8 +133,7 @@ export default {
   font-weight: 700;
 }
 
-
-input[type='text']{
+input[type="text"] {
   width: 100%;
   max-width: 400px;
   padding: 5px;
@@ -141,7 +144,7 @@ input[type='text']{
   -moz-appearance: none;
 }
 
-textarea{
+textarea {
   width: 80%;
   height: 260px;
   padding: 5px;
@@ -183,5 +186,4 @@ textarea{
 .newcategory {
   margin-top: 1em;
 }
-
 </style>

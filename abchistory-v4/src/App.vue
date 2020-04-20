@@ -5,7 +5,7 @@
       <router-link to="/contents">Contents</router-link>
       <router-link to="/add">Register</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -18,21 +18,20 @@
   color: #2c3e50;
 }
 
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 
 #nav {
-    display: flex;
-    align-items: center;
-    background: #222;
+  display: flex;
+  align-items: center;
+  background: #222;
 }
 #nav a {
-    display: block;
-    padding: 0.5em;
-    color: #eee;
-    line-height: 1em;
-    text-decoration: none;
+  display: block;
+  padding: 0.5em;
+  color: #eee;
+  line-height: 1em;
+  text-decoration: none;
 }
 </style>

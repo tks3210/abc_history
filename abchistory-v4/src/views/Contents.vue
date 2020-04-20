@@ -1,21 +1,18 @@
 <template>
   <div class="contents">
     <div class="query">
-    検索ワード
-    <input type="text" v-model="keyword" />
+      検索ワード
+      <input type="text" v-model="keyword" />
     </div>
     <div class="showproblem">
       問題一覧
-      <div class="oneproblem"
-      v-for="pm in problems"
-      v-bind:key="pm.url"
-      >
-      <!-- <p>{{pm.url | getContestFromURL}}</p> -->
-      <div class = "ptop">
-        <h3 class="pname">{{pm.url | getProblemFromURL}}</h3>
-        <p class="plevel">{{pm.level | showStarFromLevel }}</p>
-      </div>
-      <p>{{pm.discription | limitedFromDisc(limited) }}</p>
+      <div class="oneproblem" v-for="pm in problems" v-bind:key="pm.url">
+        <!-- <p>{{pm.url | getContestFromURL}}</p> -->
+        <div class="ptop">
+          <h3 class="pname">{{pm.url | getProblemFromURL}}</h3>
+          <p class="plevel">{{pm.level | showStarFromLevel }}</p>
+        </div>
+        <p>{{pm.discription | limitedFromDisc(limited) }}</p>
       </div>
     </div>
   </div>
@@ -50,26 +47,26 @@ export default {
   },
   filters: {
     getContestFromURL: function(link) {
-      var links = link.split('/');
+      var links = link.split("/");
       var num = links.length;
-      return links[num-3];
+      return links[num - 3];
     },
     getProblemFromURL: function(link) {
-      var links = link.split('/');
+      var links = link.split("/");
       var num = links.length;
-      return links[num-1];
+      return links[num - 1];
     },
     showStarFromLevel: function(level) {
-      var stars = ""
+      var stars = "";
       for (let index = 0; index < level; index++) {
         stars += "★";
       }
       return stars;
     },
-    limitedFromDisc: function(discription, limited){
+    limitedFromDisc: function(discription, limited) {
       var str = discription;
       var dot = "...";
-      if (discription.length > limited - dot.length){
+      if (discription.length > limited - dot.length) {
         str = str.substring(0, limited - dot.length);
         str += dot;
       }
@@ -80,18 +77,18 @@ export default {
 </script>
 
 <style scoped>
-.oneproblem{
-    margin:2em 1em;
-    position: relative;
-    padding: 0.25em 1em;
-    border: solid 2px #ffcb8a;
-    border-radius: 3px 0 3px 0;
-    width: 5cm;
-    height: 5cm;
-    
+.oneproblem {
+  margin: 2em 1em;
+  position: relative;
+  padding: 0.25em 1em;
+  border: solid 2px #ffcb8a;
+  border-radius: 3px 0 3px 0;
+  width: 5cm;
+  height: 5cm;
 }
 
-.oneproblem .pname, .oneproblem .plevel {
+.oneproblem .pname,
+.oneproblem .plevel {
   float: left;
   width: 50%;
 }
@@ -111,5 +108,4 @@ export default {
   margin-top: 1cm;
   border-top: 1px solid blue;
 }
-
 </style>

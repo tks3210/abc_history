@@ -1,5 +1,5 @@
 <template>
-  <div id = "app">
+  <div id="app">
     <Login v-if="!isLogin"></Login>
     <Addpm v-if="isLogin"></Addpm>
   </div>
@@ -15,8 +15,8 @@ export default {
   data() {
     return {
       isLogin: false,
-      userData: null,
-    }
+      userData: null
+    };
   },
   created: function() {
     firebase.auth().onAuthStateChanged(user => {
