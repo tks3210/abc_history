@@ -1,18 +1,25 @@
 <template>
   <div class="contents">
     <div class="query">
-      検索ワード
-      <input type="text" v-model="keyword" />
+      <div>検索ワード</div>
+      <input type="text" v-model="keyword.contest" placeholder="コンテスト名(Ex: abc162)"/>
+      <input type="text" v-model="keyword.category" placeholder="カテゴリ(Ex: 累積和、公約数)"/>
     </div>
     <div class="showproblem">
-      問題一覧
-      <div class="oneproblem" v-for="pm in problems" v-bind:key="pm.url">
-        <!-- <p>{{pm.url | getContestFromURL}}</p> -->
-        <div class="ptop">
-          <h3 class="pname">{{pm.url | getProblemFromURL}}</h3>
-          <p class="plevel">{{pm.level | showStarFromLevel }}</p>
+      <div class="subtitle">
+        問題一覧
+      </div>
+      <div class="problems">
+        <div class="oneproblem" v-for="pm in filteredproblems" v-bind:key="pm.url">
+          <div class="ptop">
+            <div class="pname">{{pm.url | getProblemFromURL}}</div>
+            <div class="plevel">{{pm.level | showStarFromLevel }}</div>
+          </div>
+          <div class="pcat">
+            <span v-for="cat in pm.categories" v-bind:key="cat">{{ cat }}</span> 
+          </div>
+          <div class="pmain">{{pm.discription | limitedFromDisc(limited) }}</div>
         </div>
-        <p>{{pm.discription | limitedFromDisc(limited) }}</p>
       </div>
     </div>
   </div>
@@ -27,7 +34,12 @@ export default {
   data() {
     return {
       limited: 40,
-      keyword: "",
+      keyword: {
+        contest: "",
+        problem: "",
+        category: "",
+        level: 0,
+      },
       tag: "",
       problems: [],
       selected: 0
@@ -44,6 +56,26 @@ export default {
           this.problems = doc.data().problems;
         }
       });
+  },
+  computed: {
+    filteredproblems: function() {
+      var data = this.problems;
+      var query_con = this.keyword.contest;
+      var query_cat = this.keyword.category;
+      if(query_con) {
+        data = data.filter(function (row) {
+            return row.url.indexOf(query_con) > -1;
+        })
+      }
+      if(query_cat) {
+        data = data.filter(function (row) {
+            return Object.keys(row.categories).some(function (key) {
+                return String(row.categories[key]).indexOf(query_cat) > -1
+            })
+        })
+      }
+      return data;
+    }
   },
   filters: {
     getContestFromURL: function(link) {
@@ -77,7 +109,37 @@ export default {
 </script>
 
 <style scoped>
+.query {
+  margin-top: 1cm;
+  margin-bottom: 1cm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.query input[type="text"] {
+  width: 60%;
+  max-width: 400px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.showproblem {
+  padding-top: 1cm;
+  border-top: 1px solid blue;
+}
+
+.problems {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .oneproblem {
+  display: column;
   margin: 2em 1em;
   position: relative;
   padding: 0.25em 1em;
@@ -86,26 +148,40 @@ export default {
   width: 5cm;
   height: 5cm;
 }
-
-.oneproblem .pname,
-.oneproblem .plevel {
+.pname,
+.plevel {
   float: left;
   width: 50%;
 }
 
-.oneproblem .ptop:after {
+.pname {
+  font-size:18px;
+  font-weight: 700;
+}
+
+.ptop{
+  margin-top: 5px;
+  margin-bottom: 2px;
+}
+
+.ptop:after {
   content: "";
   display: block;
   clear: both;
 }
 
-.query {
-  margin-top: 1cm;
+.oneproblem .pcat {
+  margin-right:3%;
+  font-size:10px;
+  font-weight: 700;
+
+  text-align: right;
+  margin-bottom:10px;
 }
 
-.showproblem {
-  display: flex;
-  margin-top: 1cm;
-  border-top: 1px solid blue;
+.oneproblem .pcat span{
+  margin: 2px;
+  font-size: 8px;
 }
+
 </style>
