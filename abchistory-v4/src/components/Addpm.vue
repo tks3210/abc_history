@@ -1,26 +1,35 @@
 <template>
   <div class="addproblem">
-    問題を追加してください
-    <br />URL
-    <input type="text" v-model="problem.url" />
-    <br />難易度
-    <select v-model="problem.level">
-      <option disabled="disabled">難易度を選択してください</option>
-      <option value="1">1:3分以内に解けた</option>
-      <option value="2">2:10分以内に解けた</option>
-      <option value="3">3:1時間以内に解けた</option>
-      <option value="4">4:1時間以上で解けた</option>
-      <option value="5">5:解説を見て解けた</option>
-      <option value="6">6:解けなかった</option>
-    </select>
-    <br />カテゴリ
-    <input type="text" v-model="tag" />
-    <button @click="addtag">カテゴリの追加</button>
-    <br />問題の概要
-    <textarea v-model="problem.discription"></textarea>
-    <br />問題の解法
-    <textarea v-model="problem.solution"></textarea>
-    <br />
+    <h3 class="presentense">問題を追加してください</h3>
+    <div class="url">
+      URL
+      <input type="text" v-model="problem.url" />
+    </div>
+    <div class="level">
+      難易度
+      <select v-model="problem.level">
+        <option disabled="disabled">難易度を選択してください</option>
+        <option value="1">1:3分以内に解けた</option>
+        <option value="2">2:10分以内に解けた</option>
+        <option value="3">3:1時間以内に解けた</option>
+        <option value="4">4:1時間以上で解けた</option>
+        <option value="5">5:解説を見て解けた</option>
+        <option value="6">6:解けなかった</option>
+      </select>
+    </div>
+    <div class = "category">
+      カテゴリ
+      <input type="text" v-model="tag" />
+      <button @click="addtag">カテゴリの追加</button>
+    </div>
+    <div class="disctription">
+      問題の概要
+      <textarea v-model="problem.discription"></textarea>
+    </div>
+    <div class="solution">
+      問題の解法
+      <textarea v-model="problem.solution"></textarea>
+    </div>
     <button @click="addproblem">問題の追加</button>
     <button @click="logout">ログアウト</button>
   </div>
@@ -49,17 +58,17 @@ export default {
       selected: 0
     };
   },
-  created: function(){
+  created: function() {
     firebase
-    .firestore()
-    .collection("data")
-    .doc("contents")
-    .get()
-    .then(doc => {
-      if (doc.exists && doc.data().problems) {
-        this.problems = doc.data().problems;
-      }
-    })
+      .firestore()
+      .collection("data")
+      .doc("contents")
+      .get()
+      .then(doc => {
+        if (doc.exists && doc.data().problems) {
+          this.problems = doc.data().problems;
+        }
+      });
   },
   methods: {
     init: function() {
@@ -73,10 +82,10 @@ export default {
       var pm = Vue.util.extend({}, this.problem);
       this.problems.push(pm);
       firebase
-      .firestore()
-      .collection("data")
-      .doc("contents")
-      .set({problems: this.problems});
+        .firestore()
+        .collection("data")
+        .doc("contents")
+        .set({ problems: this.problems });
       this.init();
     },
     addtag: function() {
