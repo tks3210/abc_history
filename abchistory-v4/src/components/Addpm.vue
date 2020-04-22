@@ -20,17 +20,12 @@
     <div class="category">
       <div class="subtitle">カテゴリ</div>
       <div class="categorySelect">
-        <select v-model="problem.categories" multiple>
-          <option disabled="disabled">問題の類型を選択してください</option>
-          <option v-for="cat in categoryDict" v-bind:key="cat">{{cat}}</option>
-        </select>
-        <div class="showcategory">
-          <div v-for="cat in problem.categories" v-bind:key="cat">{{cat}}</div>
-        </div>
+        <v-select v-model="problem.categories" :items="categoryDict" multiple>
+        </v-select>
       </div>
       <div class="newcategory">
         <input type="text" v-model="categoryNew" />
-        <button @click="addcategory">新規カテゴリの追加</button>
+        <v-btn @click="addcategory">新規カテゴリの追加</v-btn>
       </div>
     </div>
     <div class="disctription">
@@ -41,8 +36,8 @@
       <div class="subtitle">問題の解法</div>
       <textarea v-model="problem.solution"></textarea>
     </div>
-    <button @click="addproblem">問題の追加</button>
-    <button @click="logout">ログアウト</button>
+    <v-btn @click="addproblem">問題の追加</v-btn>
+    <v-btn @click="logout">ログアウト</v-btn>
   </div>
 </template>
 
@@ -170,7 +165,7 @@ textarea {
 
 .categorySelect {
   margin: 0 auto;
-  width: 60%;
+  width: 300px;
   display: flex;
 }
 

@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import Vuetify from 'vuetify'
+import "vuetify/dist/vuetify.min.css"
+
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 import * as firebase from "firebase/app";
@@ -23,7 +26,9 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+Vue.use(Vuetify);
 new Vue({
+  vuetify: new Vuetify(),
   router,
   render: h => h(App)
 }).$mount('#app')

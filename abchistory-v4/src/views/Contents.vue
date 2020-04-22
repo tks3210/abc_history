@@ -155,7 +155,13 @@ export default {
 }
 
 .pname {
-  font-size:18px;
+  font-size:16px;
+  font-weight: 700;
+}
+
+.plevel {
+  text-align: right;
+  font-size:12px;
   font-weight: 700;
 }
 
@@ -172,9 +178,7 @@ export default {
 
 .oneproblem .pcat {
   margin-right:3%;
-  font-size:10px;
   font-weight: 700;
-
   text-align: right;
   margin-bottom:10px;
 }
