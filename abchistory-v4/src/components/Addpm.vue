@@ -165,20 +165,10 @@ textarea {
 
 .categorySelect {
   margin: 0 auto;
-  width: 300px;
+  width: 250px;
   display: flex;
 }
 
-.categorySelect select {
-  position: relative;
-  width: 50%;
-  height: 4cm;
-}
-
-.categorySelect div {
-  position: relative;
-  width: 50%;
-}
 
 .newcategory {
   margin-top: 1em;

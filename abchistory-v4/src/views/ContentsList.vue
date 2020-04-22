@@ -19,6 +19,7 @@
             <span v-for="cat in pm.categories" v-bind:key="cat">{{ cat }}</span> 
           </div>
           <div class="pmain">{{pm.discription | limitedFromDisc(limited) }}</div>
+          <router-link :to="{name: 'ContenstDetail', params: {id:pm.level, problem: pm}}" >詳細</router-link>
         </div>
       </div>
     </div>
@@ -176,6 +177,7 @@ export default {
   clear: both;
 }
 
+
 .oneproblem .pcat {
   margin-right:3%;
   font-weight: 700;
@@ -188,4 +190,9 @@ export default {
   font-size: 8px;
 }
 
+.router-link {
+  font-size: 10;
+  text-align:right;
+  margin-right:3%;
+}
 </style>

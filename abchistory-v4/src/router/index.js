@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Top from '../views/Top.vue'
-import Contents from '../views/Contents.vue'
+import ContentsList from '../views/ContentsList.vue'
+import ContentsDetail from '../views/ContentsDetail.vue'
 import Add from '../views/Add.vue'
 
 Vue.use(VueRouter)
@@ -14,12 +15,14 @@ const routes = [
   },
   {
     path: '/Contents',
-    name: 'Contents',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    component: Contents
+    name: 'ContentsList',
+    component: ContentsList
+  },
+  {
+    path: '/Contents/:id',
+    name: 'ContenstDetail',
+    component: ContentsDetail,
+    props: route => ({id : String(route.params.id)})
   },
   {
     path: '/Add',
