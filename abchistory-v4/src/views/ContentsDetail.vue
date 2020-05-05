@@ -1,17 +1,33 @@
 <template>
   <div class="contentsdetail">
-    <div>URL：{{ $route.params.problem.URL }}</div>
-    <div>難易度：{{ $route.params.problem.difficulty }}</div>
-    <div>問題の概要：{{ $route.params.problem.description }}</div>
-    <div>解法:{{ $route.params.problem.solution }}</div>
-    <h2>開発中m(_ _)m</h2>
+    <div>URL：{{ problem.URL }}</div>
+    <div>難易度：{{ problem.difficulty }}</div>
+    <div>問題の概要：{{ problem.description }}</div>
+    <div>解法:{{ problem.solution }}</div>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+
 export default {
   props: {
     id : String,
+  },
+  data() {
+    return {
+      problem : {},
+    };
+  },
+  created: function() {
+    var dbProblem = firebase.firestore().collection("data").doc("contents").collection("problems").doc(this.id);
+    dbProblem.get().then(doc => {
+      if (doc.exists){
+        this.problem = doc.data();
+      }
+    });
   }
 };
 </script>

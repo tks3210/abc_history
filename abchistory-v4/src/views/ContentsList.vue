@@ -19,7 +19,7 @@
             <span v-for="cat in pm.categoryList" v-bind:key="cat">{{ cat }}</span> 
           </div>
           <div class="pmain">{{pm.description}}</div>
-          <router-link :to="{name: 'ContenstDetail', params: {id:pm.problemName, problem: pm}}" >詳細</router-link>
+          <router-link :to="{name: 'ContenstDetail', params: {id:pm.problemName}}" >詳細</router-link>
         </div>
       </div>
     </div>
@@ -47,14 +47,12 @@ export default {
     };
   },
   created: function() {
-    var dict = [];
     var dbProblem = firebase.firestore().collection("data").doc("contents").collection("problems");
-    dbProblem.get().then(function(query) {
-      query.forEach(function(doc) {
-        dict.push(doc.data());
+    dbProblem.get().then(query => {
+      query.forEach(doc => {
+        this.problems.push(doc.data());
       })
     });
-    this.problems = dict;
   },
   computed: {
     filteredproblems: function() {

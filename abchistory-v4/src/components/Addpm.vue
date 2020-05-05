@@ -80,13 +80,11 @@ export default {
     };
   },
   created: function() {
-    var dict = [];
-    this.dbCategory.get().then(function(query) {
-      query.forEach(function(doc) {
-        dict.push(doc.data().category);
+    this.dbCategory.get().then(query => {
+      query.forEach(doc => {
+        this.categoryDict.push(doc.data().category);
       })
     });
-    this.categoryDict = dict;
   },
   methods: {
     init: function() {
