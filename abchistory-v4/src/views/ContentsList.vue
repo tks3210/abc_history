@@ -10,16 +10,16 @@
         問題一覧
       </div>
       <div class="problems">
-        <div class="oneproblem" v-for="pm in filteredproblems" v-bind:key="pm.url">
+        <div class="oneproblem" v-for="pm in filteredproblems" v-bind:key="pm.problemName">
           <div class="ptop">
-            <div class="pname">{{pm.url | getProblemFromURL}}</div>
-            <div class="plevel">{{pm.level | showStarFromLevel }}</div>
+            <div class="pname">{{pm.problemName}}</div>
+            <div class="plevel">{{pm.difficulty | showStarFromLevel}}</div>
           </div>
           <div class="pcat">
-            <span v-for="cat in pm.categories" v-bind:key="cat">{{ cat }}</span> 
+            <span v-for="cat in pm.categoryList" v-bind:key="cat">{{ cat }}</span> 
           </div>
-          <div class="pmain">{{pm.discription | limitedFromDisc(limited) }}</div>
-          <router-link :to="{name: 'ContenstDetail', params: {id:pm.level, problem: pm}}" >詳細</router-link>
+          <div class="pmain">{{pm.description}}</div>
+          <router-link :to="{name: 'ContenstDetail', params: {id:pm.problemName, problem: pm}}" >詳細</router-link>
         </div>
       </div>
     </div>
@@ -43,20 +43,18 @@ export default {
       },
       tag: "",
       problems: [],
-      selected: 0
+      selected: 0,
     };
   },
   created: function() {
-    firebase
-      .firestore()
-      .collection("data")
-      .doc("contents")
-      .get()
-      .then(doc => {
-        if (doc.exists && doc.data().problems) {
-          this.problems = doc.data().problems;
-        }
-      });
+    var dict = [];
+    var dbProblem = firebase.firestore().collection("data").doc("contents").collection("problems");
+    dbProblem.get().then(function(query) {
+      query.forEach(function(doc) {
+        dict.push(doc.data());
+      })
+    });
+    this.problems = dict;
   },
   computed: {
     filteredproblems: function() {
@@ -65,13 +63,13 @@ export default {
       var query_cat = this.keyword.category;
       if(query_con) {
         data = data.filter(function (row) {
-            return row.url.indexOf(query_con) > -1;
+            return row.contestName == query_con;
         })
       }
       if(query_cat) {
         data = data.filter(function (row) {
-            return Object.keys(row.categories).some(function (key) {
-                return String(row.categories[key]).indexOf(query_cat) > -1
+            return Object.keys(row.categoryList).some(function (key) {
+                return String(row.categoryList[key]).indexOf(query_cat) > -1
             })
         })
       }
@@ -79,27 +77,17 @@ export default {
     }
   },
   filters: {
-    getContestFromURL: function(link) {
-      var links = link.split("/");
-      var num = links.length;
-      return links[num - 3];
-    },
-    getProblemFromURL: function(link) {
-      var links = link.split("/");
-      var num = links.length;
-      return links[num - 1];
-    },
-    showStarFromLevel: function(level) {
+    showStarFromLevel: function(difficulty) {
       var stars = "";
-      for (let index = 0; index < level; index++) {
+      for (let index = 0; index < difficulty; index++) {
         stars += "★";
       }
       return stars;
     },
-    limitedFromDisc: function(discription, limited) {
-      var str = discription;
+    limitedFromDisc: function(description, limited) {
+      var str = description;
       var dot = "...";
-      if (discription.length > limited - dot.length) {
+      if (description.length > limited - dot.length) {
         str = str.substring(0, limited - dot.length);
         str += dot;
       }
@@ -183,11 +171,22 @@ export default {
   font-weight: 700;
   text-align: right;
   margin-bottom:10px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .oneproblem .pcat span{
   margin: 2px;
   font-size: 8px;
+}
+
+.oneproblem .pmain {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .router-link {
